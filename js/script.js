@@ -24,6 +24,27 @@ function getAge(){  //find a way to filter content based on age
 
 }
 
+function search_sections() {
+  const input = document.getElementById('searchbar').value.toLowerCase();
+  const list = document.getElementById('list');
+  const items = list.getElementsByClassName('films');
+
+  let anyVisible = false;
+
+  for (let i = 0; i < items.length; i++) {
+    const text = items[i].textContent.toLowerCase();
+    if (text.includes(input) && input !== '') {
+      items[i].style.display = 'block';
+      anyVisible = true;
+    } else {
+      items[i].style.display = 'none';
+    }
+  }
+
+  list.style.display = anyVisible ? 'block' : 'none';
+}
+
+
 // SWAPPING OUT JQUERY BECAUSE THAT'S A BITCH
 // function showNav() {
 //   var div = $('#dropdown-menu');
@@ -215,25 +236,5 @@ document.getElementById('aasbPoster').src = newMovie.image;
 console.log(newMovie);
 
 
-
-function search_sections() {
-    const input = document.getElementById('searchbar').value.toLowerCase();
-    const list = document.getElementById('list');
-    const items = list.getElementsByClassName('films');
-  
-    let anyVisible = false;
-  
-    for (let i = 0; i < items.length; i++) {
-      const text = items[i].textContent.toLowerCase();
-      if (text.includes(input) && input !== '') {
-        items[i].style.display = 'block';
-        anyVisible = true;
-      } else {
-        items[i].style.display = 'none';
-      }
-    }
-  
-    list.style.display = anyVisible ? 'block' : 'none';
-  }
 
 
