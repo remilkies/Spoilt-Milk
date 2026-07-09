@@ -93,7 +93,7 @@ WE NEED TO FIND A WAY TO MAKE IT STOP SLIGHTLY BEYND THE VIEWPORT SO THAT WHEN Y
 */
 
 #splashBackground {
-    /* z-index: 1030; */
+    /* z-index: 50; */
     pointer-events: none;
 }
 
