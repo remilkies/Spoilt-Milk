@@ -120,16 +120,26 @@ input ::placeholder{
     position: absolute;
 }
 
-#dropdown-menu{
+#dropdown-menu {
     background-color: #67161F;
-
+    padding-top: 0em; 
+    opacity: 0;
+    transition: padding-top 0.6s ease-out, opacity 0.6s ease-out;
 }
 
-#dropdown-nav{
+#dropdown-menu.is-open {
+    padding-top: 30em;
+    opacity: 1;
+}
+
+#dropdown-nav {
     display: none;
     background-color: #67161F;
     padding-bottom: 4em;
+}
 
+#dropdown-menu.is-open #dropdown-nav {
+    display: block;
 }
 
 .splashContainer{

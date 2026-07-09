@@ -24,37 +24,60 @@ function getAge(){  //find a way to filter content based on age
 
 }
 
-function showNav() {
-  var div = $('#dropdown-menu');
-  console.log("Navbar toggled, splash background animated.");
-  var navBar = $('#dropdown-nav');  
-  div.animate({ paddingTop: '30em',opacity: 1}, 'slow'); //use camelCase for JS properties
-  div.show();
-  // navBar.show();
-  console.log('nav content shown');
-}
+// SWAPPING OUT JQUERY BECAUSE THAT'S A BITCH
+// function showNav() {
+//   var div = $('#dropdown-menu');
+//   console.log("Navbar toggled, splash background animated.");
+//   var navBar = $('#dropdown-nav');  
+//   div.animate({ paddingTop: '30em',opacity: 1}, 'slow'); //use camelCase for JS properties
+//   div.show();
+//   // navBar.show();
+//   console.log('nav content shown');
+// }
 
-$('#navbar-toggler').on("click", function() {
-  showNav();
+// $('#navbar-toggler').on("click", function() {
+//   showNav();
+// });
+
+// $('#navbar-close').on("click", function() {
+//   var div = $('#dropdown-menu');
+//   var navBar = $('#dropdown-nav');
+//   navBar.hide();
+//   div.animate({ paddingTop: '0em',opacity: 1}, 'slow');;
+//   console.log("Navbar closed, splash background animated.");
+// });
+
+// $('#reviewContinueBtn').on("click", function() {
+//   var review = $('#reviewContinued');
+//   var button = $('#reviewContinueBtn');
+//   button.hide();
+//   review.show();
+//   console.log("Review continued, more text displayed.");
+// });
+
+const togglerBtn = document.getElementById('navbar-toggler');
+const closeBtn = document.getElementById('navbar-close');
+const dropdownMenu = document.getElementById('dropdown-menu');
+const reviewBtn = document.getElementById('reviewContinueBtn');
+const reviewContent = document.getElementById('reviewContinued');
+
+togglerBtn.addEventListener('click', () => {
+  dropdownMenu.classList.add('is-open');
+  console.log("Navbar toggled, splash background animated.");
 });
 
-$('#navbar-close').on("click", function() {
-  var div = $('#dropdown-menu');
-  var navBar = $('#dropdown-nav');
-  navBar.hide();
-  div.animate({ paddingTop: '0em',opacity: 1}, 'slow');;
+closeBtn.addEventListener('click', () => {
+  dropdownMenu.classList.remove('is-open');
   console.log("Navbar closed, splash background animated.");
 });
 
-$('#reviewContinueBtn').on("click", function() {
-  var review = $('#reviewContinued');
-  var button = $('#reviewContinueBtn');
-  button.hide();
-  review.show();
-  console.log("Review continued, more text displayed.");
-});
-
-
+if (reviewBtn && reviewContent) {
+  reviewBtn.addEventListener('click', () => {
+    reviewBtn.style.display = 'none';
+    reviewContent.style.display = 'block';
+    console.log("Review continued, more text displayed.");
+  });
+}
 class User{
   constructor(age){
     this.age = age;
