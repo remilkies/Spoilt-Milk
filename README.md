@@ -8,7 +8,7 @@ It was born out of a pure obsession with anything and EVERYTHING horror (manga, 
 
 When you have binged an ungodly amount of horror cinema, such as I, spanning from the gritty (and horribly CGI'd) 1980s to the bloody 2024, remembering every single title becomes a terrifying nightmare in its own right. Especially when people KNOW I'm an absolute horror FIEND, but then when they ask for a recommendation I only ever remember Midsommar and I feel like a poser T-T. So this site is for me to remember all the movies I watch, but more for the movies I HIGHLY recommend :D
 
-Thanks for reading and WELCOME TO SPOILT MILK >:D
+Thank yewww for reading and WELCOME TO SPOILT MILK >:D
 
 ## 🩸 Features
 
