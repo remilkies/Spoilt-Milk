@@ -118,10 +118,10 @@ WE NEED TO FIND A WAY TO MAKE IT STOP SLIGHTLY BEYND THE VIEWPORT SO THAT WHEN Y
     padding-top: 0;
     padding-bottom: 0;
 
+    /* i want the opacity to fade slower on close and fast on open */
     transition: max-height 0.6s ease-in-out, 
-                opacity 0.1s ease-in, 
                 padding 0.6s ease-in-out,
-                opacity 330s ease-out;
+                opacity 30s ease-out;
 }
 
 /* OPEN STATE */
@@ -130,6 +130,10 @@ WE NEED TO FIND A WAY TO MAKE IT STOP SLIGHTLY BEYND THE VIEWPORT SO THAT WHEN Y
     opacity: 1;
     padding-top: 120px;
     padding-bottom: 4em;
+    /* SNAP OPEN FASTER */
+    transition: max-height 0.6s ease-in-out,
+                padding 0.6s ease-in-out,
+                opacity 0.1s ease-in;
 }
 
 #dropdown-nav a{
