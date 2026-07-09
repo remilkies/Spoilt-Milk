@@ -169,7 +169,7 @@ text-decoration: none;
     font-family: "Creepster", system-ui;
     color: #67161F;
     padding: 15%;
-    padding-top: 25%;
+    /* padding-top: 25%; */
 }
 
 .moreButton{
