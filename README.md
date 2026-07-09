@@ -3,7 +3,9 @@
 > *"Welcome to the worse version of Rotten Tomatoes. Reviews from certified yappers."*
 
 Spoilt Milk is a custom-built, highly opinionated movie review platform dedicated strictly to the best (and absolute worst) of the horror genre. This is also the legendary **very first website** I ever built from scratch during my first year of college (besides standard school submissions >:D). 
+
 It was born out of a pure obsession with anything and EVERYTHING horror (manga, video games and anime included) and a deep, burning conviction that Rotten Tomatoes is completely rigged -_- 
+
 When you have binged an ungodly amount of horror cinema, such as I, spanning from the gritty (and horribly CGI'd) 1980s to the bloody 2024, remembering every single title becomes a terrifying nightmare in its own right. Especially when people KNOW I'm an absolute horror FIEND, but then when they ask for a recommendation I only ever remember Midsommar and I feel like a poser T-T. So this site is for me to remember all the movies I watch, but more for the movies I HIGHLY recommend :D
 
 Thanks for reading and WELCOME TO SPOILT MILK >:D
