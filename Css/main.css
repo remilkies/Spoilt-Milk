@@ -10,21 +10,19 @@ html, body{
 main{
     flex: 1;
 }
+
 a{
     text-decoration: none;
     color: inherit;
 }
 
-#dropdown-nav a{
-    color: #F0DBBE;
-    font-family: "Creepster", system-ui;
-    font-size: 25px;
-    text-align: center;
+button{
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
 }
 
-#dropdown-nav a:hover{
-    color: #AD2F33;
-}
+/* TYPOGRAPHY STUFF */
 
 h1{
     font-family: "Creepster", system-ui;
@@ -46,38 +44,10 @@ h3{
     text-align: center;
 }
 
-.movieItem h3{
-    font-family: "Creepster", system-ui;
-    color: #F0DBBE;
-    font-size: 25px;
-    text-align: center;
-    padding-top: 1em;
-}
-
-button{
-    border: none;
-    background-color: transparent;
-    text-decoration: underline;
-}
-
-.moreButton{
-    width: 10%;
-}
-input{
-    border: none;
-    display: flex;              /* enables flexbox */
-    justify-content: center;    /* horizontal centering */
-    align-items: center;        /* vertical centering */
-    flex-direction: column; 
-}
 .creepster-regular {
     font-family: "Creepster", system-ui;
     font-weight: 400;
     font-style: normal;
-  }
-
-.modal-body{
-    font-family: "Creepster", system-ui;
 }
 
 .navbar{
@@ -114,31 +84,74 @@ input ::placeholder{
     color: #67161F;
     opacity: 1; /* Firefox */
 }
-#splashBackground img{
-    width: 100%;
-    height: auto;
+
+/* 
+==================================
+    🩸 BLOOD DROP DOWN CASCADE 🩸
+===================================
+*/
+
+#splashBackground {
     position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1030;
+    pointer-events: none;
 }
 
 #dropdown-menu {
-    background-color: #67161F;
-    padding-top: 0em; 
-    opacity: 0;
-    transition: padding-top 0.6s ease-out, opacity 0.6s ease-out;
-}
-
-#dropdown-menu.is-open {
-    padding-top: 30em;
-    opacity: 1;
+    /* background-color: #67161F; */
+    width: 100%;
+    pointer-events: auto;
 }
 
 #dropdown-nav {
-    display: none;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
     background-color: #67161F;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    transition: max-height 0.6s ease-in-out, 
+                opacity 0.4s ease-in-out, 
+                padding 0.6s ease-in-out;
+}
+
+#dropdown-menu.is-open #droptdown-nav {
+    max-height: 550px;
+    opacity: 1;
+    padding-top: 120px;
     padding-bottom: 4em;
 }
 
-#dropdown-menu.is-open #dropdown-nav {
+#dropdown-nav a{
+    color: #F0DBBE;
+    font-family: "Creepster", system-ui;
+    font-size: 25px;
+    text-align: center;
+    transition: color 0.2s ease;
+}
+
+#dropdown-nav a:hover{
+    color: #AD2F33;
+}
+
+
+#navbar-close {
+color: #F0DBBE;
+font-family: "Creepster", system-ui;
+font-size: 30px;
+position: absolute;
+right: 30px;
+top: 110px;
+text-decoration: none;
+}
+
+#splashImg img{
+    width: 100%;
+    height: auto;
     display: block;
 }
 
@@ -150,8 +163,23 @@ input ::placeholder{
     font-family: "Creepster", system-ui;
     color: #67161F;
     padding: 15%;
-    /* margin-top: -50px; */
+    padding-top: 25%;
 }
+
+.moreButton{
+    width: 10%;
+}
+
+input{
+    border: none;
+    display: flex;              /* enables flexbox */
+    justify-content: center;    /* horizontal centering */
+    align-items: center;        /* vertical centering */
+    flex-direction: column; 
+}
+/* ========================= */
+/* MOVIE CARDS SYSTEM */
+/* ========================= */
 
 .movieItem{
     font-family: "Creepster", system-ui;
@@ -162,11 +190,20 @@ input ::placeholder{
     background-color: #67161F;
     border-radius: 16px;
     margin: 2em;
-    
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .movieItem:hover{
     background-color: #AD2F33;
+    transform: scale(1.02);
+}
+
+.movieItem h3{
+    font-family: "Creepster", system-ui;
+    color: #F0DBBE;
+    font-size: 25px;
+    text-align: center;
+    padding-top: 1em;
 }
 
 .movieItem img{
@@ -176,11 +213,6 @@ input ::placeholder{
     
 }
 
-.movieContent h3, p{
-    font-family: "Creepster", system-ui;
-    color: #F0DBBE;
-}
-
 .movieContent{
     padding: 30px;
     background-color: #AD2F33;
@@ -188,21 +220,28 @@ input ::placeholder{
     border-radius: 16px;
 }
 
+.movieContent h3, .movieContent p{
+    font-family: "Creepster", system-ui;
+    color: #F0DBBE;
+}
+
 #reviewContinued{
     display: none;
 }
 
+/* FOOTER SHIT */
+footer{
+    margin-top: auto;
+}
+
 .footer{
     background-color: #67161F;
+    text-align: center;
 }
 
 footer h3{
     font-family: "Creepster", system-ui;
     color: #F0DBBE;
-}
-
-footer{
-    margin-top: auto;
 }
 
 footer img{
