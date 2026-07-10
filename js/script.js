@@ -79,8 +79,8 @@ function search_sections() {
 const togglerBtn = document.getElementById('navbar-toggler');
 const closeBtn = document.getElementById('navbar-close');
 const dropdownMenu = document.getElementById('dropdown-menu');
-const reviewBtn = document.getElementById('reviewContinueBtn');
-const reviewContent = document.getElementById('reviewContinued');
+const reviewBtn = document.getElementById('review-extended-btn');
+const reviewContent = document.getElementById('review-extended');
 
 // Only attach listener if toggler and menu exist on current
 if (togglerBtn && dropdownMenu) {
@@ -90,7 +90,6 @@ if (togglerBtn && dropdownMenu) {
   });
 }
 
-// ony attach listener if the close button exists on current
 if (closeBtn && dropdownMenu) {
   closeBtn.addEventListener('click', () => {
     dropdownMenu.classList.remove('is-open');
@@ -98,11 +97,12 @@ if (closeBtn && dropdownMenu) {
   });
 }
 
+// ony attach listener if the close button exists on current
 if (reviewBtn && reviewContent) {
   reviewBtn.addEventListener('click', () => {
     reviewBtn.style.display = 'none';
     reviewContent.style.display = 'block';
-    console.log("Review continued, more text displayed.");
+    console.log("WAIT, THERE'S MORE!?");
   });
 }
 class User{

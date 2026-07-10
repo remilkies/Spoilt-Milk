@@ -44,6 +44,12 @@ h3{
     text-align: center;
 }
 
+h6{
+    font-family: "Creepster", system-ui;
+    color: #67161F;
+    font-size: 14px;
+    text-align: center;
+}
 .creepster-regular {
     font-family: "Creepster", system-ui;
     font-weight: 400;
@@ -52,13 +58,21 @@ h3{
 
 .navbar{
     background-color: #67161F;
+    position: relative;
     display: flex;
-    padding: 42px;}
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 3em;
+}
+
 
 .navbar-float{
     background-color: #67161F;
+    width: 70vw;
     border-radius: 15px;
     margin-top: 1em;
+    padding: 1em;
 }
 .navbar-toggler-icon{
     background-color: #F0DBBE;
@@ -69,8 +83,8 @@ h3{
     background-color: #F0DBBE;
     border: 3px solid #67161F;
     border-radius: 15px;
-    padding:10px;
-    width: 40em;
+    padding: 10px;
+    width: 40vw;
     color: #67161F;
 }
 input {
@@ -92,12 +106,12 @@ input ::placeholder{
 WE NEED TO FIND A WAY TO MAKE IT STOP SLIGHTLY BEYND THE VIEWPORT SO THAT WHEN YOU OPEN THE MENU THE BLOD DRIOPS STRAIGHT DOWN
 */
 
-#splashBackground {
+#splash-background {
     /* z-index: 50; */
     pointer-events: none;
 }
 
-#splashBackground img{
+#splash-background img{
     width: 100%;
     height: auto;
     position: absolute;
@@ -165,7 +179,7 @@ text-decoration: none;
     display: block;
 }
 
-.splashContainer{
+.splash-container{
     display: flex;
     justify-content: center;    
     align-items: center;        
@@ -191,7 +205,7 @@ input{
 /* MOVIE CARDS SYSTEM */
 /* ========================= */
 
-.movieItem{
+.movie-item{
     font-family: "Creepster", system-ui;
     color: #F0DBBE;
     padding: 30px;
@@ -203,12 +217,12 @@ input{
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.movieItem:hover{
+.movie-item:hover{
     background-color: #AD2F33;
     transform: scale(1.02);
 }
 
-.movieItem h3{
+.movie-item h3{
     font-family: "Creepster", system-ui;
     color: #F0DBBE;
     font-size: 25px;
@@ -216,26 +230,26 @@ input{
     padding-top: 1em;
 }
 
-.movieItem img{
+.movie-item img{
     width: 100%;
     height: auto;
     border-radius: 16px;
     
 }
 
-.movieContent{
+.movie-content{
     padding: 30px;
     background-color: #AD2F33;
     margin: 30px;
     border-radius: 16px;
 }
 
-.movieContent h3, .movieContent p{
+.movie-content h3, .movie-content p{
     font-family: "Creepster", system-ui;
     color: #F0DBBE;
 }
 
-#reviewContinued{
+#review-extended{
     display: none;
 }
 
