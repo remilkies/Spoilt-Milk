@@ -118,10 +118,10 @@ class User{
      ========================================== */
 
   class Movie {
-    constructor(title, genre, image, desc) {
+    constructor(title, genre, poster, desc) {
       this.title = title;
       this.genre = genre;
-      this.image = image;
+      this.poster = poster;
       this.desc = desc;
     }
   }
@@ -136,32 +136,34 @@ class User{
       Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDE2OWZkMTg5MDg0NGZkNGZiMGMzYmI5YWIzOTkzMCIsIm5iZiI6MTc1OTQwNzA5MC41NDcwMDAyLCJzdWIiOiI2OGRlNmJmMjJkMGI0YTkwYjZkYTU3OWUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.H3q6GBug0aWNLQPpsTml0iQE9AAWo8QJzI2GBSxWuP4'
       }
     };
-  
+
     try {
       const response = await fetch(url, options);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       
       // fallbacks so layout doesn't FREAK OUT if an image/text is missing o7
-      let image = data.thumbnails && data.thumbnails[2] ? data.thumbnails[2].url : (data.primaryImage || "assets/posters/placeholder.jpg");
+      let poster = data.thumbnails && data.thumbnails[2] ? data.thumbnails[2].url : (data.primaryImage || "assets/posters/placeholder.jpg" && console.log("NOT RECIEVING IMAGE AHHHHH"));
       let desc = data.description || "No description provided yet by the yappers.";
       let title = data.primaryTitle || "Untitled Movie";
-      let genre = data.genres ? data.genres.join(', ') : "Horror";
+      let genre = data.genres ? data.genres.join(', ') : "Horror" || console.log("null genre");
   
-      const newMovie = new Movie(title, genre, image, desc);
+      
+      const newMovie = new Movie(title, genre, poster, desc);
   
-      // Map properties directly to HTML with prefix
+      // Map properties directly to HTML with prefix MAKE SURE THE PREFIX MATCHES THE HTML
       const elements = {
         title: document.getElementById(`${elementPrefix}Title`),
-        info: document.getElementById(`${elementPrefix}Info`),
+        desc: document.getElementById(`${elementPrefix}Desc`),
         genre: document.getElementById(`${elementPrefix}Genre`),
         poster: document.getElementById(`${elementPrefix}Poster`)
       };
   
+      
       if (elements.title) elements.title.innerHTML = newMovie.title;
-      if (elements.info) elements.info.innerHTML = newMovie.desc;
+      if (elements.desc) elements.desc.innerHTML = newMovie.desc;
       if (elements.genre) elements.genre.innerHTML = newMovie.genre;
-      if (elements.poster) elements.poster.src = newMovie.image;
+      if (elements.poster) elements.poster.src = newMovie.poster;
   
       console.log(`Successfully loaded: ${newMovie.title}`);
   
