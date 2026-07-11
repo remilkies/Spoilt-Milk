@@ -76,6 +76,28 @@ function search_sections() {
 //   console.log("Review continued, more text displayed.");
 // });
 
+// =========================
+// LIGHT/DARK MODE TOGGLER
+// =========================
+
+const body = document.body;
+const darkToggle = document.getElementById('dark-toggler');
+const lightToggle = document.getElementById('light-toggler');
+
+document.getElementById('dark-toggler').addEventListener('click', () => {
+  darkToggle.style.display = 'none';
+  body.style.filter = 'brightness(0.5)';
+  lightToggle.style.display = 'show';
+  console.log("awww what's wrong? Poor baby can't handle the light?");
+})
+
+document.getElementById('light-toggle').addEventListener('click', () => {
+  lightToggle.style.display = 'none';
+  body.style.filter = 'none';
+  darkToggle.style.display = 'show';
+  console.log("and the rem said LET THERE BE LIIIIIIIIGHT");
+})
+
 const togglerBtn = document.getElementById('navbar-toggler');
 const closeBtn = document.getElementById('navbar-close');
 const dropdownMenu = document.getElementById('dropdown-menu');

@@ -2,6 +2,7 @@ html, body{
     margin: 0;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: #F0DBBE;
+
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -11,6 +12,9 @@ main{
     flex: 1;
 }
 
+section{
+    top: 0;
+}
 a{
     text-decoration: none;
     color: inherit;
@@ -27,20 +31,20 @@ button{
 h1{
     font-family: "Creepster", system-ui;
     color: #67161F;
-    font-size: 60px;
+    font-size: 4em;
     text-align: center;
 }
 
 h2{
     font-family: "Creepster", system-ui;
     color: #67161F;
-    font-size: 40px;
+    font-size: 2em;
     text-align: center;
 }
 h3{
     font-family: "Creepster", system-ui;
     color: #67161F;
-    font-size: 30px;
+    font-size: 1em;
     text-align: center;
 }
 
