@@ -1,8 +1,10 @@
-document.addEventListener("DOMContentLoaded", function () { //verifyAge
-  preventdefault();
-  let modal = new bootstrap.Modal(document.getElementById('verifyAge'));
-  modal.show();
-});// HOW DO I MAKE IT NOT SHOW IT EVERYTIME YOU LOAD THE INDEX PAGE
+
+
+// document.addEventListener("DOMContentLoaded", function () { //verifyAge
+//   preventdefault();
+//   let modal = new bootstrap.Modal(document.getElementById('verifyAge'));
+//   modal.show();
+// });// HOW DO I MAKE IT NOT SHOW IT EVERYTIME YOU LOAD THE INDEX PAGE
 
 function getAge(){  //find a way to filter content based on age
 //UPON ENTERING WEBSITE THERE NEEDS TO BE A BLOCK THAT ASKS FOR AGE, LIKE FOR DRUGS AND PORN
@@ -82,27 +84,54 @@ function search_sections() {
 
 // 
 
+// =====================================
+// DYNAMIC NAVIGATION PIPELINE LOADER
+// =====================================
 
-const togglerBtn = document.getElementById('navbar-toggler');
-const closeBtn = document.getElementById('navbar-close');
-const dropdownMenu = document.getElementById('dropdown-menu');
+document.addEventListener("DOMContentLoaded", () => {
+  // preventDefault(); only for forms
+  const navAnchor = document.getElementById('global-nav-anchor');
+
+  if (navAnchor) {
+    fetch('/components/navbar.html')
+    .then(response => {
+      if (!response.ok) throw new Error("YOU'RE LOST - Navigation structural fetch failed.");
+      return response.text();
+    })
+
+    .then(htmlMarkup => {
+      navAnchor.innerHTML = htmlMarkup;
+
+    bindNavigationControllers();
+    })
+    .catch(err => console.error("Component Loader Error: ", err));
+  }
+});
+
+function bindNavigationControllers() {
+  const togglerBtn = document.getElementById('navbar-toggler');
+  const closeBtn = document.getElementById('navbar-close');
+  const dropdownMenu = document.getElementById('dropdown-menu');
+
+  // Only attach listener if toggler and menu exist on current
+  if (togglerBtn && dropdownMenu) {
+    togglerBtn.addEventListener('click', () => {
+      dropdownMenu.classList.add('is-open');
+      console.log("Navbar toggled, splash background animated.");
+    });
+  }
+
+  if (closeBtn && dropdownMenu){
+    closeBtn.addEventListener('click', () => {
+      dropdownMenu.classList.remove('is-open');
+      console.log("Navbar closed, splash background animated.")
+    });
+  }
+}
+
+
 const reviewBtn = document.getElementById('review-extended-btn');
 const reviewContent = document.getElementById('review-extended');
-
-// Only attach listener if toggler and menu exist on current
-if (togglerBtn && dropdownMenu) {
-  togglerBtn.addEventListener('click', () => {
-    dropdownMenu.classList.add('is-open');
-    console.log("Navbar toggled, splash background animated.");
-  });
-}
-
-if (closeBtn && dropdownMenu) {
-  closeBtn.addEventListener('click', () => {
-    dropdownMenu.classList.remove('is-open');
-    console.log("Navbar closed, splash background animated.");
-  });
-}
 
 // ony attach listener if the close button exists on current
 if (reviewBtn && reviewContent) {
