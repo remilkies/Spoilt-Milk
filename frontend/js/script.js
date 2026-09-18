@@ -1,12 +1,12 @@
 
 
-// document.addEventListener("DOMContentLoaded", function () { //verifyAge
-//   preventdefault();
-//   let modal = new bootstrap.Modal(document.getElementById('verifyAge'));
-//   modal.show();
-// });// HOW DO I MAKE IT NOT SHOW IT EVERYTIME YOU LOAD THE INDEX PAGE
+document.addEventListener("DOMContentLoaded", function () { //verifyAge
+  preventdefault();
+  let modal = new bootstrap.Modal(document.getElementById('verifyAge'));
+  modal.show();
+});// HOW DO I MAKE IT NOT SHOW IT EVERYTIME YOU LOAD THE INDEX PAGE
 
-function getAge(){  //find a way to filter content based on age
+function getAge(){  //find a way to filter content based on age...now that I think about it...do i even want to go through that effort O_O
 //UPON ENTERING WEBSITE THERE NEEDS TO BE A BLOCK THAT ASKS FOR AGE, LIKE FOR DRUGS AND PORN
   var age = document.getElementById('age').value;
   var rating = 18;
@@ -87,6 +87,7 @@ function search_sections() {
 // =====================================
 // DYNAMIC NAVIGATION PIPELINE LOADER
 // =====================================
+
 
 document.addEventListener("DOMContentLoaded", () => {
   // preventDefault(); only for forms
@@ -214,7 +215,9 @@ class User{
   const horrorWatchlist = [
     { id: 'tt28821371', prefix: 'mads' }, // MadS
     { id: 'tt34508974', prefix: 'sndn' }, // Silent Night, Deadly Night
-    { id: 'tt2870612',  prefix: 'aasb' }  // As Above, So Below
+    { id: 'tt2870612',  prefix: 'aasb' }, // As Above, So Below
+    { id: '', prefix: 'strangeland'} //Strangeland (1998) - Welcome to Xibalba "what was god thinking when he made Carlton" TW: SA, Torture, Mutilation, Body Horror (kinda), Gore. If you're a true crime fan, Think David Parker Ray (Toybox Killer) if he was alternative, with a fetish for body modification. Spoiler: Most satisfying ending in the history of film and you might wanna make a new playlist to add every song in this film becuase the musiccccccc AND THEY PUT THE NAMES OF ALL THE SONGS SO STICK AROUND A LITTLE BIT FOR THE CREDIS. Lowkey a cult classic i don't know why more people dont talk about it o7
+    //"...Don't be afrid to die. Death is the standard by which the reality and depth of all things can be judged" "Pain is a uniquly personal expirience"
   ];
   
 
