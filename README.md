@@ -29,12 +29,30 @@ This project is a front-end labour of love, engineered to be lightweight, scalab
 
 > ⚠️ **Developer Note:** I have no idea why first-year me thought that redoing the API data fetch separately *for every single movie* was a good idea. We don't talk about the dark times. It's fixed now. :P
 
+## Application Blood Flow 
+ 
+No backend, no database, just pure front-end vibes and a prayer to the IMDb API gods:
+ 
+```text
+Page Loads → index.html renders static movie grid (HTML skeleton, no data yet)
+                                        ↓
+                  loadMovieData(imdbId, elementPrefix) fires per card
+                                        ↓
+                        fetch() request → IMDb API
+                                        ↓
+                        JSON Response (poster, genre, description)
+                                        ↓
+              JS injects data into matching HTML elements via elementPrefix
+                                        ↓
+                     Fully "dynamic" (read: hardcoded HTML, live data) card
+```
+ 
 ## 🗺️ Roadmap aka The Next Nightmare
-
-Spoilt Milk is preparing for a massive server-side upgrade:
-* **PHP & SQL Integration:** Moving hardcoded movie grids and static text components into a dynamic relational database.
+Spoilt Milk is preparing for a server-side upgrade >:D
+ 
+* **Document-Oriented Database (MongoDB):** A review is a self-contained record — movie ID, rating, spoilt review, genre tags, timestamp — with no complex joins needed to make sense of it. Incoming API data (posters, descriptions, cast) already arrives as JSON, so it maps directly to a document schema without translation overhead. Genres and tags live as embedded arrays right inside each review, keeping queries like "show me every Found Footage review" fast and simple.
 * **TMDb Migration:** Transitioning to The Movie Database (TMDb) API to leverage bulk arrays of movies, trending movie lists, and eliminate daily endpoint call caps.
-* **Dynamic Review Submission:** Turning the "Recommend a film" page into a live user insert portal via PHP forms.
+* **Dynamic Review Submission:** Turning the "Recommend a film" page into a live user insert portal, with submissions written straight into the document store.
 
 ## Get Spooky Right In Your Own Home
 
@@ -48,4 +66,4 @@ Spoilt Milk is preparing for a massive server-side upgrade:
 **Remazani (REMByte)**
 *UI/UX Designer & Front-End Leaning Full-Stack Developer.* When I'm not fixing broken navbars or screaming at video games, I'm probably diving into horror manga, watching movies, making clay crafts, or blasting punk rock at max volume. 
 
-*Copyright 2026 - REMByte*
+*Copyright 2024 - REMByte*
