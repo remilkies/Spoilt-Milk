@@ -40,6 +40,7 @@ function getHtmlInputs() {
 
 export default defineConfig({
   base: './',
+  publicDir: 'public',
   build: {
     rollupOptions: {
       input: getHtmlInputs(),
