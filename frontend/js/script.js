@@ -1,51 +1,107 @@
 
 
-document.addEventListener("DOMContentLoaded", function () { //verifyAge
-  preventdefault();
-  let modal = new bootstrap.Modal(document.getElementById('verifyAge'));
-  modal.show();
-});// HOW DO I MAKE IT NOT SHOW IT EVERYTIME YOU LOAD THE INDEX PAGE
+/* ==========================================
+   AGE GATE
+   //find a way to filter content based on age...now that I think about it...do i even want to go through that effort O_O
+  //UPON ENTERING WEBSITE THERE NEEDS TO BE A BLOCK THAT ASKS FOR AGE, LIKE FOR DRUGS AND PORN
+   ========================================== */
+const AGE_KEY = 'ageTier'; // 'full' | 'limited' | 'blocked'
+const LOCKED = { backdrop: 'static', keyboard: false }; // can't click/Esc the modal away
 
-function getAge(){  //find a way to filter content based on age...now that I think about it...do i even want to go through that effort O_O
-//UPON ENTERING WEBSITE THERE NEEDS TO BE A BLOCK THAT ASKS FOR AGE, LIKE FOR DRUGS AND PORN
-  var age = document.getElementById('age').value;
-  var rating = 18;
+function loadTier() {
+  try { return localStorage.getItem(AGE_KEY); } catch { return null; }
+}
 
-  if (age >= rating) {
+function saveTier(tier) {
+  try { localStorage.setItem(AGE_KEY, tier); } catch { /* private mode: gate just shows again */ }
+}
 
+function showModal(id, options) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  bootstrap.Modal.getOrCreateInstance(el, options).show();
+}
+
+function hideModal(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  bootstrap.Modal.getInstance(el)?.hide();
+}
+
+function initAgeGate() {
+  const tier = loadTier();
+  if (!tier) {
+    showModal('verifyAge', LOCKED);
+    return;
+  }
+  applyTier(tier, false);
+}
+
+// Sets <body data-access="..."> so CSS can do the content filtering:
+//   body[data-access="limited"] .mature { display: none; }
+function applyTier(tier, justVerified) {
+  document.body.dataset.access = tier;
+
+  if (tier === 'blocked') {
+    showModal('restrictedAccess', LOCKED); // every visit, so a reload can't dodge it
+  } else if (tier === 'limited' && justVerified) {
+    showModal('limitedAccess'); // only announce it right after they enter their age
+  }
+}
+
+// reminder to hook up with onsubmit="getAge(event)" or onclick="getAge()"
+function getAge(event) { 
+  if (event) event.preventDefault(); // preventDefault only works with an event, and only matters for forms
+
+  const age = parseInt(document.getElementById('age').value, 10);
+  if (Number.isNaN(age) || age < 1 || age > 120) {
+    console.log("that's not an age, try again");
+    return;
+  }
+
+  let tier;
+  if (age >= 18) {
+    tier = 'full';
     console.log("yayy, you can access this website, thanks for not lying about your age");
-  } if (rating > age && age >= 13) {
-    let limitedAccess = new bootstrap.Modal(document.getElementById('limitedAccess'));
-    limitedAccess.show();
+  } else if (age >= 13) {
+    tier = 'limited';
     console.log("yayy, you can enter this website BUT you're a minor so your access will be limited");
-  } if (age < 13) {
-    let restrictedAccess = new bootstrap.Modal(document.getElementById('restrictedAccess'));
-    restrictedAccess.show();
+  } else {
+    tier = 'blocked';
     console.log("sorry, you can't enter this website, lie about your age next time");
   }
 
+  saveTier(tier);
+
+  // wait for the first modal to finish closing before opening the next one
+  const gate = document.getElementById('verifyAge');
+  if (gate) {
+    gate.addEventListener('hidden.bs.modal', () => applyTier(tier, true), { once: true });
+    hideModal('verifyAge');
+  } else {
+    applyTier(tier, true);
+  }
 }
 
+/* ==========================================
+   SEARCH
+   ========================================== */
 function search_sections() {
-  const input = document.getElementById('searchbar').value.toLowerCase();
   const list = document.getElementById('list');
-  const items = list.getElementsByClassName('films');
+  const searchbar = document.getElementById('searchbar');
+  if (!list || !searchbar) return;
 
+  const query = searchbar.value.trim().toLowerCase();
   let anyVisible = false;
 
-  for (let i = 0; i < items.length; i++) {
-    const text = items[i].textContent.toLowerCase();
-    if (text.includes(input) && input !== '') {
-      items[i].style.display = 'block';
-      anyVisible = true;
-    } else {
-      items[i].style.display = 'none';
-    }
+  for (const item of list.getElementsByClassName('films')) {
+    const match = query !== '' && item.textContent.toLowerCase().includes(query);
+    item.style.display = match ? 'block' : 'none';
+    if (match) anyVisible = true;
   }
 
   list.style.display = anyVisible ? 'block' : 'none';
 }
-
 
 // SWAPPING OUT JQUERY BECAUSE THAT'S A BITCH
 // function showNav() {
@@ -78,81 +134,67 @@ function search_sections() {
 //   console.log("Review continued, more text displayed.");
 // });
 
-// =========================
-// LIGHT/DARK MODE TOGGLER
-// =========================
-
-// 
-
-// =====================================
-// DYNAMIC NAVIGATION PIPELINE LOADER
-// =====================================
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  // preventDefault(); only for forms
+/* ==========================================
+   DYNAMIC NAVIGATION PIPELINE LOADER
+   ========================================== */
+async function loadNavbar() {
   const navAnchor = document.getElementById('global-nav-anchor');
+  if (!navAnchor) return;
 
-  if (navAnchor) {
-    fetch('/components/navbar.html')
-    .then(response => {
-      if (!response.ok) throw new Error("YOU'RE LOST - Navigation structural fetch failed.");
-      return response.text();
-    })
-
-    .then(htmlMarkup => {
-      navAnchor.innerHTML = htmlMarkup;
-
-    bindNavigationControllers();
-    })
-    .catch(err => console.error("Component Loader Error: ", err));
+  try {
+    // leading slash = relative to the site root. If you deploy to a subfolder
+    // (like a GitHub Pages project site) this path needs to change.
+    const response = await fetch('/components/navbar.html');
+    if (!response.ok) throw new Error("YOU'RE LOST - Navigation structural fetch failed.");
+    navAnchor.innerHTML = await response.text();
+    bindNavigationControllers(); // only after the markup exists
+  } catch (err) {
+    console.error('Component Loader Error: ', err);
   }
-});
+}
 
 function bindNavigationControllers() {
   const togglerBtn = document.getElementById('navbar-toggler');
   const closeBtn = document.getElementById('navbar-close');
   const dropdownMenu = document.getElementById('dropdown-menu');
-
   // Only attach listener if toggler and menu exist on current
-  if (togglerBtn && dropdownMenu) {
+  if (!dropdownMenu) return;
+
+  if (togglerBtn) {
     togglerBtn.addEventListener('click', () => {
       dropdownMenu.classList.add('is-open');
-      console.log("Navbar toggled, splash background animated.");
+      console.log('Navbar toggled, splash background animated.');
     });
   }
 
-  if (closeBtn && dropdownMenu){
+  if (closeBtn) {
     closeBtn.addEventListener('click', () => {
       dropdownMenu.classList.remove('is-open');
-      console.log("Navbar closed, splash background animated.")
+      console.log('Navbar closed, splash background animated.');
     });
   }
 }
 
+/* ==========================================
+   "READ MORE" REVIEW TOGGLE
+   ========================================== */
+function initReviewToggle() {
+  const reviewBtn = document.getElementById('review-extended-btn');
+  const reviewContent = document.getElementById('review-extended');
+  if (!reviewBtn || !reviewContent) return; // only on pages that have it
 
-const reviewBtn = document.getElementById('review-extended-btn');
-const reviewContent = document.getElementById('review-extended');
-
-// ony attach listener if the close button exists on current
-if (reviewBtn && reviewContent) {
   reviewBtn.addEventListener('click', () => {
     reviewBtn.style.display = 'none';
     reviewContent.style.display = 'block';
-    console.log("WAIT, THERE'S MORE!?");
+    console.log('WAIT, THERE\'S MORE!?');
   });
-}
-class User {
-  constructor(age) {
-    this.age = age;
-  }
 }
 
 // <div id='put every id for every movie here so i can grab it in js and wont have to make individual pages for every movie, just click the movie and it will trigger the corresponding things info and review'></div> , you're still going to have to do the api thing like 100 times tho unless you find an api thing that lets you access every movie at once and then filter it based on what movie was clicked. 
-
 /* ==========================================
-    MOVIES ENGINE
+   MOVIES ENGINE
    ========================================== */
+const MOVIES_URL ='/data/movies.json'; // local JSON file with movie data so no API key ships to the browser o7
 
 class Movie {
   constructor(title, genre, image, desc) {
@@ -163,94 +205,42 @@ class Movie {
   }
 }
 
-// Reusable fetch engine
-async function loadMovieData(imdbId, elementPrefix) {
-  const url = `https://imdb236.p.rapidapi.com/api/imdb/${imdbId}`;
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDE2OWZkMTg5MDg0NGZkNGZiMGMzYmI5YWIzOTkzMCIsIm5iZiI6MTc1OTQwNzA5MC41NDcwMDAyLCJzdWIiOiI2OGRlNmJmMjJkMGI0YTkwYjZkYTU3OWUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.H3q6GBug0aWNLQPpsTml0iQE9AAWo8QJzI2GBSxWuP4'
-      }
-    };
-
-    try {
-      const response = await fetch(url, options);
+  let moviesPromise = null;
+ 
+  // fetch the JSON once and share it with every getMovie() call >:D
+  function getMovies() {
+    moviesPromise ??= fetch(MOVIES_URL).then(response => {
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-      
-      // fallbacks so layout doesn't FREAK OUT if an image/text is missing o7
-      let poster = data.thumbnails && data.thumbnails[2] ? data.thumbnails[2].url : (data.primaryImage || "assets/posters/placeholder.jpg" && console.log("NOT RECIEVING IMAGE AHHHHH"));
-      let desc = data.description || "No description provided yet by the yappers.";
-      let title = data.primaryTitle || "Untitled Movie";
-      let genre = data.genres ? data.genres.join(', ') : "Horror" || console.log("null genre");
-  
-      
-      const newMovie = new Movie(title, genre, poster, desc);
-  
-      // Map properties directly to HTML with prefix MAKE SURE THE PREFIX MATCHES THE HTML
-      const elements = {
-        title: document.getElementById(`${elementPrefix}Title`),
-        desc: document.getElementById(`${elementPrefix}Desc`),
-        genre: document.getElementById(`${elementPrefix}Genre`),
-        poster: document.getElementById(`${elementPrefix}Poster`)
-      };
-  
-      
-      if (elements.title) elements.title.innerHTML = newMovie.title;
-      if (elements.desc) elements.desc.innerHTML = newMovie.desc;
-      if (elements.genre) elements.genre.innerHTML = newMovie.genre;
-      if (elements.poster) elements.poster.src = newMovie.poster;
-  
-      console.log(`Successfully loaded: ${newMovie.title}`);
-  
-    } catch (error) {
-      console.error(`Failed to drag ${elementPrefix} out of the grave:`, error);
-    }
+      return response.json();
+    });
+    return moviesPromise;
   }
-  
-  /* ==========================================
-     MOVIE REGISTRY (courtasy of 2nd year Rem <3)
-     ========================================== */
-  const horrorWatchlist = [
-    { id: 'tt28821371', prefix: 'mads' }, // MadS
-    { id: 'tt34508974', prefix: 'sndn' }, // Silent Night, Deadly Night
-    { id: 'tt2870612',  prefix: 'aasb' }, // As Above, So Below
-    { id: '', prefix: 'strangeland'} //Strangeland (1998) - Welcome to Xibalba "what was god thinking when he made Carlton" TW: SA, Torture, Mutilation, Body Horror (kinda), Gore. If you're a true crime fan, Think David Parker Ray (Toybox Killer) if he was alternative, with a fetish for body modification. Spoiler: Most satisfying ending in the history of film and you might wanna make a new playlist to add every song in this film becuase the musiccccccc AND THEY PUT THE NAMES OF ALL THE SONGS SO STICK AROUND A LITTLE BIT FOR THE CREDIS. Lowkey a cult classic i don't know why more people dont talk about it o7
-    //"...Don't be afrid to die. Death is the standard by which the reality and depth of all things can be judged" "Pain is a uniquly personal expirience"
-  ];
-  
+   
+  async function getMovie(imdbId) {
+    const movies = await getMovies();
+    const m = movies[imdbId];
+    if (!m) throw new Error(`${imdbId} isn't in movies.json, re-run the fetch script`);
+    return new Movie(m.title, m.genre, m.image, m.desc);
+  }
 
-  try {
-    const response = await fetch(url, options);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const data = await response.json();
+// Maps a Movie onto the page. MAKE SURE THE PREFIX MATCHES THE HTML ids:
+// ${prefix}Title, ${prefix}Desc (or ${prefix}Info), ${prefix}Genre, ${prefix}Poster
+function renderMovie(movie, prefix) {
+  // textContent instead of innerHTML so API text can never inject markup o7
+  const setText = (suffix, value) => {
+    const el = document.getElementById(`${prefix}${suffix}`);
+    if (el) el.textContent = value;
+  };
 
-    // fallbacks so layout doesn't FREAK OUT if an image/text is missing o7
-    let image = data.thumbnails && data.thumbnails[2] ? data.thumbnails[2].url : (data.primaryImage || "/assets/posters/placeholder.jpg");
-    let desc = data.description || "No description provided yet by the yappers.";
-    let title = data.primaryTitle || "Untitled Movie";
-    let genre = data.genres ? data.genres.join(', ') : "Horror";
+  setText('Title', movie.title);
+  setText('Desc', movie.desc);
+  setText('Info', movie.desc); // old id name, covers both
+  setText('Genre', movie.genre);
 
-    const newMovie = new Movie(title, genre, image, desc);
-
-    // Map properties directly to HTML with prefix
-    const elements = {
-      title: document.getElementById(`${elementPrefix}Title`),
-      info: document.getElementById(`${elementPrefix}Info`),
-      genre: document.getElementById(`${elementPrefix}Genre`),
-      poster: document.getElementById(`${elementPrefix}Poster`)
-    };
-
-    if (elements.title) elements.title.innerHTML = newMovie.title;
-    if (elements.info) elements.info.innerHTML = newMovie.desc;
-    if (elements.genre) elements.genre.innerHTML = newMovie.genre;
-    if (elements.poster) elements.poster.src = newMovie.image;
-
-    console.log(`Successfully loaded: ${newMovie.title}`);
-
-  } catch (error) {
-    console.error(`Failed to drag ${elementPrefix} out of the grave:`, error);
+  const poster = document.getElementById(`${prefix}Poster`);
+  if (poster) {
+    poster.src = movie.image;
+    poster.alt = `${movie.title} poster`;
   }
 }
 
@@ -260,16 +250,43 @@ async function loadMovieData(imdbId, elementPrefix) {
 const horrorWatchlist = [
   { id: 'tt28821371', prefix: 'mads' }, // MadS
   { id: 'tt34508974', prefix: 'sndn' }, // Silent Night, Deadly Night
-  { id: 'tt2870612', prefix: 'aasb' }  // As Above, So Below
+  { id: 'tt2870612', prefix: 'aasb' }, // As Above, So Below
+  { id: 'tt0124102', prefix: 'strangeland' }, //Strangeland (1998) - Welcome to Xibalba "what was god thinking when he made Carlton" TW: SA, Torture, Mutilation, Body Horror (kinda), Gore. If you're a true crime fan, Think David Parker Ray (Toybox Killer) if he was alternative, with a fetish for body modification. Spoiler: Most satisfying ending in the history of film and you might wanna make a new playlist to add every song in this film becuase the musiccccccc AND THEY PUT THE NAMES OF ALL THE SONGS SO STICK AROUND A LITTLE BIT FOR THE CREDIS. Lowkey a cult classic i don't know why more people dont talk about it o7
+  //"...Don't be afrid to die. Death is the standard by which the reality and depth of all things can be judged" "Pain is a uniquly personal expirience"
+  {id: 'tt1703199', prefix: 'graveEncounters'}
 ];
 
 
-horrorWatchlist.forEach(movie => {
-  loadMovieData(movie.id, movie.prefix);
+
+
+
+
+async function loadWatchlist() {
+  // only fetch movies that actually have a spot on THIS page
+  const onThisPage = horrorWatchlist.filter(({ prefix }) =>
+    document.getElementById(`${prefix}Title`) || document.getElementById(`${prefix}Poster`)
+  );
+  if (onThisPage.length === 0) return;
+
+  // allSettled: one movie failing doesn't stop the rest from loading
+  const results = await Promise.allSettled(
+    onThisPage.map(async ({ id, prefix }) => {
+      const movie = await getMovie(id);
+      renderMovie(movie, prefix);
+      console.log(`Successfully loaded: ${movie.title}`);
+    })
+  );
+
+  results.forEach((result, i) => {
+    if (result.status === 'rejected') {
+      console.error(`Failed to drag ${onThisPage[i].prefix} out of the grave:`, result.reason);
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initAgeGate();
+  loadNavbar();
+  initReviewToggle();
+  loadWatchlist();
 });
-
-console.log(newMovie);
-
-
-
-
