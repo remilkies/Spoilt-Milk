@@ -245,15 +245,34 @@ function renderMovie(movie, prefix) {
 }
 
 /* ==========================================
-   MOVIE REGISTRY (courtasy of 2nd year Rem <3)
+    MOVIE REGISTRY (courtasy of 2nd year Rem <3)
    ========================================== */
+  //  MAYBE DOUBLE TRIPPLE QUADRUPLE CHEACK THAT YOU ADDED THESE *IN ORDERER* IN THE fetch-movies.mjs script
 const horrorWatchlist = [
   { id: 'tt28821371', prefix: 'mads' }, // MadS
   { id: 'tt34508974', prefix: 'sndn' }, // Silent Night, Deadly Night
   { id: 'tt2870612', prefix: 'aasb' }, // As Above, So Below
   { id: 'tt0124102', prefix: 'strangeland' }, //Strangeland (1998) - Welcome to Xibalba "what was god thinking when he made Carlton" TW: SA, Torture, Mutilation, Body Horror (kinda), Gore. If you're a true crime fan, Think David Parker Ray (Toybox Killer) if he was alternative, with a fetish for body modification. Spoiler: Most satisfying ending in the history of film and you might wanna make a new playlist to add every song in this film becuase the musiccccccc AND THEY PUT THE NAMES OF ALL THE SONGS SO STICK AROUND A LITTLE BIT FOR THE CREDIS. Lowkey a cult classic i don't know why more people dont talk about it o7
   //"...Don't be afrid to die. Death is the standard by which the reality and depth of all things can be judged" "Pain is a uniquly personal expirience"
-  {id: 'tt1703199', prefix: 'graveEncounters'}
+  {id: 'tt1703199', prefix: 'graveEncounters'}, //Grave Encounters
+  {id: 'tt37287335', prefix: 'obsession'}, //Obsession
+  {id: 'tt8772262', prefix: 'midsommar'}, //Midsommar
+  {id: 'tt9731534', prefix: 'theNightHouse'}, //The Night House (tbw - to be watched)
+  {id: 'tt9764362', prefix: 'theMenu'}, //The Menu TBW
+  {id: 'tt4267026', prefix: 'hellHouseLLC'}, //Hell House LLC
+  {id: 'tt1029234', prefix: 'martyrs'}, //Martyrs (Reviewd)
+  {id: 'tt4003440', prefix: 'theHouseThatJackBuilt'}, //The House That Jack Built (it's giving HH Holmes but i haven't seen it yet)
+  {id: 'tt6081670', prefix: 'possum'}, //Possum (unsettleing)
+  {id: 'tt0145681', prefix:'theBoneCollector'},
+  {id: 'tt0251736', prefix: 'houseOf1000Corpses'}, //Reminiicent of Willy Pickton? Nasty farm? bunhca bodies?
+  {id: '', prefix: 'houseOfWax'}, 
+  {id: 'tt0373883', prefix: 'holloween'}, //Holloween 2007
+  {id: '', prefix: 'thirteenGhosts'}, //Thirteen Ghosts
+  {id: 'tt0093177', prefix: 'hellraiser'}, //Hellraiser 1987
+  {id: 'tt28443655', prefix: 'deathOfAUnicorm'}, //how this movie flew under my radar for so long is beyond me, Jenna Ortega on Disney channel was part of my lesbian awakening in primary school....let's find out if the universe was saving me or gatekeeping a gem
+  {id: 'tt26470109', prefix: 'oddity'}, //9.7
+  {id: ''}
+
 ];
 
 
