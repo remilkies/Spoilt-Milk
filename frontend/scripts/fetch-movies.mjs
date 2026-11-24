@@ -13,7 +13,35 @@ const API = 'https://api.themoviedb.org/3';
 const IMG = 'https://image.tmdb.org/t/p/w500';
 
 // IMDb ids. Keep in sync with horrorWatchlist in main.js (i know this makes my life harder but you have no idea how much more i prefer it this way)
-const IDS = ['tt28821371', 'tt34508974', 'tt2870612', 'tt0124102', 'tt1703199'];
+const IDS = [
+  'tt28821371',
+  'tt34508974',
+  'tt2870612', 
+  'tt0124102', 
+  'tt1703199',
+  'tt37287335',
+  'tt8772262',
+  'tt9731534',
+  'tt9764362',
+  'tt4267026',
+  'tt1029234',
+  'tt4003440',
+  'tt6081670',
+  'tt0145681',
+  'tt0251736',
+  'tt0397065',
+  'tt0373883',
+  'tt0245674',
+  'tt0093177',
+  'tt28443655',
+  'tt26470109',
+  'tt1148204',
+  'tt35672862',
+  'tt31170389',
+  'tt5792468',
+  'tt0125198',
+  'tt0387564'
+];
 
 async function tmdb(path) {
   const response = await fetch(`${API}${path}`, {
