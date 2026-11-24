@@ -300,7 +300,7 @@ const horrorWatchlist = [
   {id:'', prefix: ''},
   {id:'', prefix: ''},
   {id:'', prefix: ''},
-  {id: 'tt0432348', prefix: 'sawII'}, //the cure for death is immortality" ok so beoynd the ost disorienting cinemotograohy i thnk i've ever fallen victim to, which in hindsight is kind of a fitting artistic choice, this was a pretty solid movie and as sequals go i think I like this one more than the first Saw...even though it's kinda like final destination in that i kinda feels like an anthology? but yeah 8.8/10
+  {id: 'tt0432348', prefix: 'sawII'}, //the cure for death is immortality..by creating a legacy..by living a life worth rembering, you become imortal" which is excatly why the saw franchise is still talked about today as a classic in horror. ok so beoynd the ost disorienting cinemotograohy i thnk i've ever fallen victim to, which in hindsight is kind of a fitting artistic choice, this was a pretty solid movie and as sequals go i think I like this one more than the first Saw...even though it's kinda like final destination in that i kinda feels like an anthology? but yeah 8.8/10
   // just copy paste this o7 {id:'', prefix: ''},
 ];
 
